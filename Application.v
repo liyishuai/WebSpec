@@ -13,7 +13,11 @@ Module Type Application (FS : FileSystem) (Prim : HttpPrimitive).
           map : URI -> option path
         }.
 
-  Definition App A := abstract_application -> (A * abstract_application).
+  Parameter application_state : Type.
+  Parameter fs : application_state -> file_system.
+  Parameter map: application_state -> URI -> option path.
+
+  Definition App A := application_state -> (A * application_state).
 
   Parameter execute : HttpPrimitive -> App HttpResponse.
 
