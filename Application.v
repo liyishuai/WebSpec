@@ -21,16 +21,17 @@ Module Type Application (FS : FileSystem) (Prim : HttpPrimitive).
       execute (Prim_Get uri) app = (Response status entity, app') ->
       (* GET does not modify mapping *)
       map app' = map app /\
-      (* found *)
+      (* URI found in mapping *)
       (forall p, map app uri = Some p ->
+       (* path found in file system *)
        (forall bs, contents (fs app) p = Some bs ->
                    status = Status_OK /\ 
                    entity = file_content bs) /\
-       (* not found in file system *)
+       (* path not found in file system *)
        (contents (fs app) p = None ->
         status = Status_NotFound /\
         entity = empty)) /\
-      (* not found in mapping *)
+      (* URI not found in mapping *)
       (map app uri = None ->
        status = Status_NotFound /\
        entity = empty).
