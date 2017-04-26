@@ -11,3 +11,4 @@ HttpdInterface.v
 FileSystem.v
 SimpleFileSystem.v
 FSResource.v
+HttpPrimitive.v

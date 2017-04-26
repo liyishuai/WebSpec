@@ -3,3 +3,5 @@
 *.glob
 *.d
 Makefile*
+*~
+*#*
