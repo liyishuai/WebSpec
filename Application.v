@@ -8,11 +8,6 @@ Module Type Application (FS : FileSystem) (Prim : HttpPrimitive).
   Parameter empty : entity.
   Parameter file_content : list bool -> entity.
 
-  Record abstract_application :=
-    abs { fs  : abstract_file_system;
-          map : URI -> option path
-        }.
-
   Parameter application_state : Type.
   Parameter fs : application_state -> file_system.
   Parameter map: application_state -> URI -> option path.
