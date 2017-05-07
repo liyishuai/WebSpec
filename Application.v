@@ -35,4 +35,12 @@ Module Type Application (FS : FileSystem) (Prim : HttpPrimitive).
        status = Status_NotFound /\
        entity = empty).
 
+  Axiom put_spec : forall bs uri app status entity' app',
+      let entity := file_content bs in
+      execute (Prim_Put uri entity) app = (Response status entity', app') ->
+      status = Status_OK /\
+      exists p,
+        map app' uri = Some p /\
+        contents (fs app') p = Some bs.
+
 End Application.
