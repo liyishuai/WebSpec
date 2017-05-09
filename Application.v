@@ -39,8 +39,13 @@ Module Type Application (FS : FileSystem) (Prim : HttpPrimitive).
       let entity := file_content bs in
       execute (Prim_Put uri entity) app = (Response status entity', app') ->
       status = Status_OK /\
-      exists p,
-        map app' uri = Some p /\
-        contents (fs app') p = Some bs.
+      (* URI is bound to some resource *)
+      (exists p,
+          map app' uri = Some p /\
+          contents (fs app') p = Some bs) /\
+      (* other URI' remain unchanged *)
+      forall uri',
+        map app  uri' <> map app uri ->
+        map app' uri' = map app uri'.
 
 End Application.
