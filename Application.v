@@ -1,12 +1,11 @@
 Require Import FileSystem.
-Require Import HttpPrimitive.
+Require Import HttpMessage.
 
-Module Type Application (FS : FileSystem) (Prim : HttpPrimitive).
+Module Type Application (FS : FileSystem) (Msg : HttpMessage).
   Import FS.
-  Import Prim.
+  Import Msg.
 
-  Parameter empty : entity.
-  Parameter file_content : list bool -> entity.
+  Parameter file_content : list bool -> HttpEntityBody.
 
   Parameter application_state : Type.
   Parameter fs : application_state -> file_system.
@@ -14,7 +13,7 @@ Module Type Application (FS : FileSystem) (Prim : HttpPrimitive).
 
   Definition App A := application_state -> (A * application_state).
 
-  Parameter execute : HttpPrimitive -> App HttpResponse.
+  Parameter execute : HttpRequest -> App HttpResponse.
 
   Axiom get_spec : forall uri app status entity app',
       execute (Prim_Get uri) app = (Response status entity, app') ->

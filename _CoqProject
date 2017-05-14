@@ -13,8 +13,7 @@ FileSystem.v
 SimpleFileSystem.v
 Resource.v
 FSResource.v
-HttpPrimitive.v
-Application.v
+HttpMessage.v
 HttpdInterface.v
 SimpleHttpd.v
 WebServer.v
