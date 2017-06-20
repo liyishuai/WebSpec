@@ -1,4 +1,3 @@
-
 language: generic
 dist: trusty
 sudo: required
@@ -10,13 +9,12 @@ os:
 install:
     case $TRAVIS_OS_NAME in
     osx)
-    brew update &&
-    brew install coq ;;
+    travis_retry brew update &&
+    travis_retry brew install coq ;;
     linux)
-    wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin &&
-    opam install coq -y &&
-    eval $(opam config env) ;;
+    travis_retry wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh -O - | sh -s /usr/local/bin &&
+    travis_retry opam install coq -y &&
+    travis_retry eval $(opam config env) ;;
     esac
 script:
-    coq_makefile -f _CoqProject -o Makefile &&
-    make -j
+    travis_retry make -j

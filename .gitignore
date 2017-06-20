@@ -2,6 +2,6 @@
 *.aux
 *.glob
 *.d
-Makefile*
+*.coq
 *~
 *#*
